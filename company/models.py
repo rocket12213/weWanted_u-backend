@@ -15,14 +15,14 @@ class Companise(models.Model) :
     class Meta :
         db_table = "companise"
 
-class CompaniseImgs(models.Model) :
+class CompaniseImages(models.Model) :
     companise       = models.ForeignKey(Companise, on_delete=models.CASCADE)
     company_img     = models.URLField(max_length = 3000)
     created_at      = models.DateTimeField(auto_now_add = True)
     updated_at      = models.DateTimeField(auto_now =True)
 
     class Meta :
-        db_table = "companiseImgs"
+        db_table = "companise_images"
 
         
     
