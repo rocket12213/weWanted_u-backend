@@ -1,6 +1,9 @@
 #my_settings.py
 my_settings.py
 
+#parser.py
+parser.py
+
 # Created by https://www.gitignore.io/api/vim,macos,python,django
 # Edit at https://www.gitignore.io/?templates=vim,macos,python,django
 
