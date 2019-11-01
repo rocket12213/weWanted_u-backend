@@ -1,6 +1,7 @@
 import jwt
 import json
 import bcrypt
+
 from django.http     import JsonResponse
 from django.views    import View
 
@@ -24,11 +25,10 @@ class SignupView(View) :
                     email   = login_data["email"],
                     password= hased_user_pw.decode("UTF-8")
                 ).save()
-
                 return JsonResponse({"message":"Success"}, status=200)
 
         except KeyError :
-            return JsonResponse({"message":"Wrong_Path"}, status=403)
+            return JsonResponse({"message":"Wrong_Path"}, status=400)
 
 class AuthView(View) : 
     def post(self, request) :
@@ -48,7 +48,7 @@ class AuthView(View) :
             return JsonResponse({"message":"INVALID_EMAIL"}, status=400)
 
         except KeyError :
-            return JsonResponse({"message":"Wrong_Path"}, status=403)
+            return JsonResponse({"message":"Wrong_Path"}, status=400)
 
 
 
