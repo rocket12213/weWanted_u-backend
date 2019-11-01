@@ -1,10 +1,11 @@
-import Json
+import jwt
+import json
 import bcrypt
-from django.http import Jsonresponse
-from django.views import view
+from django.http     import JsonResponse
+from django.views    import View
 
 
-class SignupView(view) :
+class SignupView(View) :
     def post (self, request) :
         login_data = json.loads(request.body)
         
@@ -19,34 +20,35 @@ class SignupView(view) :
                 return JsonResponse({"message":"User_Exists"}, status= 400)
             else:
                 hased_user_pw = bcrypt.hashpw(login_data["password"].encode("UTF-8"), bcrypt.gensalt())
- 		Users(
+                Users(
                     email   = login_data["email"],
                     password= hased_user_pw.decode("UTF-8")
-                    ).save()
+                ).save()
 
                 return JsonResponse({"message":"Success"}, status=200)
 
         except KeyError :
             return JsonResponse({"message":"Wrong_Path"}, status=403)
 
-
-
-class AuthView(view) : 
+class AuthView(View) : 
     def post(self, request) :
         login_data = json.loads(request.body)
         password   = login_data["password"]
 
         try :
-        exist_user = Users.objects.get(email=login_data["email"])
+            exist_user = Users.objects.get(email=login_data["email"])
             if bcrypt.checkpw(password.encode("utf-8"), exit_user.password.encode("utf-8")) :
                 payload 	  = {"email" : exit_user.id}
-		encryption_secret = "secret"
-		algorithm	  = "HS256"
-		encoded		  = jwt.encode(payload, encryption_secret, algorithm=algorithm)
-		return JsonResponse({"JsonWebToken":encoded.decode("UTF-8")}, status=200)
+                encryption_secret = "secret"
+                algorithm	  = "HS256"
+                encoded		  = jwt.encode(payload, encryption_secret, algorithm=algorithm)
+                return JsonResponse({"JsonWebToken":encoded.decode("UTF-8")}, status=200)
  
         except Users.DoesNotExist :
-		return JsonResponse({"message":"INVALID_EMAIL"}, status=400)
+            return JsonResponse({"message":"INVALID_EMAIL"}, status=400)
+
+        except KeyError :
+            return JsonResponse({"message":"Wrong_Path"}, status=403)
 
 
-# Create your views here.
+
