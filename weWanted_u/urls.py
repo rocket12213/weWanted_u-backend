@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """weWanted_u URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,7 +18,8 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('signup.urls'),    
-    path('', include('auth.urls')
+    path('', include('signup.urls'),
+    path('', include('auth.urls'),
+    path('company', include('company.urls')),
 ]
          
