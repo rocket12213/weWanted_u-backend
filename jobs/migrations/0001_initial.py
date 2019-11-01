@@ -9,39 +9,39 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('company', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Companise',
+            name='Categories',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('company_name', models.CharField(max_length=300)),
-                ('main_image', models.URLField(max_length=3000, null=True)),
-                ('logo_image', models.URLField(max_length=3000, null=True)),
-                ('city', models.CharField(max_length=100)),
-                ('country', models.CharField(max_length=100)),
-                ('full_location', models.CharField(max_length=1000)),
-                ('lat', models.DecimalField(decimal_places=30, max_digits=35, null=True)),
-                ('lng', models.DecimalField(decimal_places=30, max_digits=35, null=True)),
+                ('category', models.CharField(max_length=500)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
             ],
             options={
-                'db_table': 'companise',
+                'db_table': 'categories',
             },
         ),
         migrations.CreateModel(
-            name='CompaniseImages',
+            name='Jobs',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('company_img', models.URLField(max_length=3000)),
+                ('position', models.CharField(max_length=500)),
+                ('intro', models.CharField(max_length=3000)),
+                ('main_tasks', models.CharField(max_length=3000)),
+                ('requirements', models.CharField(max_length=3000)),
+                ('preferred_points', models.CharField(max_length=3000)),
+                ('benefits', models.CharField(max_length=3000)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
+                ('categories', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jobs.Categories')),
                 ('companise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='company.Companise')),
             ],
             options={
-                'db_table': 'companise_images',
+                'db_table': 'jobs',
             },
         ),
     ]
