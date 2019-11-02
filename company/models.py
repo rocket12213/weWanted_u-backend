@@ -1,6 +1,6 @@
 from django.db import models
 
-class Companise(models.Model) :
+class Companies(models.Model) :
     company_name    = models.CharField(max_length = 300)
     main_image      = models.URLField(max_length = 3000, null = True)
     logo_image      = models.URLField(max_length = 3000, null = True)
@@ -13,13 +13,13 @@ class Companise(models.Model) :
     updated_at      = models.DateTimeField(auto_now = True)
 
     class Meta :
-        db_table = "companise"
+        db_table = "companies"
 
-class CompaniseImages(models.Model) :
-    companise       = models.ForeignKey(Companise, on_delete=models.CASCADE)
-    company_img     = models.URLField(max_length = 3000)
+class CompaniesImages(models.Model) :
+    companies       = models.ForeignKey(Companies, on_delete=models.CASCADE)
+    company_image   = models.URLField(max_length = 3000)
     created_at      = models.DateTimeField(auto_now_add = True)
     updated_at      = models.DateTimeField(auto_now =True)
 
     class Meta :
-        db_table = "companise_images"
+        db_table = "companies_images"
