@@ -28,7 +28,6 @@ class Jobs(models.Model) :
     benefits            = models.TextField(null=True)
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
-    
     jobs_join_tags      = models.ManyToManyField(Tags, through='JobsToTags')
 
     class Meta :
