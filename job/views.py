@@ -86,6 +86,7 @@ class JobsMainPageView(View) :
                                 "position"      : job.position,
                                 "job_id"        : job.id
                                }
+
                     company = {
                                 "company_name"  : company_query_set.company_name,
                                 "main_image"    : company_query_set.main_image,
@@ -93,7 +94,7 @@ class JobsMainPageView(View) :
                                 "country"       : company_query_set.country,
                                 "company_id"    : company_query_set.id
                               }
-                    tags     = [{"skill" : Tags.objects.get(id= tag.tags_id).skill, "tag_id" : tag.tags_id} for tag in tags_query_set]
+                    tags = [{"skill" : Tags.objects.get(id= tag.tags_id).skill, "tag_id" : tag.tags_id} for tag in tags_query_set]
                     job_data = {"job" : job_info, "company" : company, "tags" : tags}
                     main_data.append(job_data)
 
