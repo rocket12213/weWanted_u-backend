@@ -4,6 +4,7 @@ import bcrypt
 
 from django.http     import JsonResponse
 from django.views    import View
+from users.models    import Users
 
 
 class SignupView(View) :
@@ -37,8 +38,8 @@ class AuthView(View) :
 
         try :
             exist_user = Users.objects.get(email=login_data["email"])
-            if bcrypt.checkpw(password.encode("utf-8"), exit_user.password.encode("utf-8")) :
-                payload 	  = {"email" : exit_user.id}
+            if bcrypt.checkpw(password.encode("utf-8"), exist_user.password.encode("utf-8")) :
+                payload 	  = {"email" : exist_user.id}
                 encryption_secret = "secret"
                 algorithm	  = "HS256"
                 encoded		  = jwt.encode(payload, encryption_secret, algorithm=algorithm)
