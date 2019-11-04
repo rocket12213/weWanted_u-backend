@@ -28,7 +28,7 @@ class JobDetailPageView(View) :
                         "main_image"    : company_query_set.main_image,
                         "logo_image"    : company_query_set.logo_image,
                         "city"          : company_query_set.city,
-                       "country"       : company_query_set.country,
+                        "country"       : company_query_set.country,
                         "full_location" : company_query_set.full_location,
                         "lat"           : company_query_set.lat,
                         "lng"           : company_query_set.lng,
@@ -46,29 +46,56 @@ class JobDetailPageView(View) :
 
 class JobsMainPageView(View) : 
     def get(self, request, categories_id) :
-        category_query_set              = Categories.objects.get(pk=categories_id)
-        job_list_query_set              = category_query_set.jobs_set.all()
-        
-        main_data=[]
-        for job in job_list_query_set :
-            company_query_set = Companies.objects.get(pk=job.companies_id)
-            tags_query_set = JobsToTags.objects.filter(jobs_id=job.id)
-          
-            job_info = {
-                        "position"          : job.position,
-                        "job_id"            : job.id
-                       }
+        if (categories_id == 1 or categories_id == 2) :
+            category_query_set = Categories.objects.get(pk=categories_id)
+            job_list_query_set = category_query_set.jobs_set.all()
             
-            company = {
-                        "company_name"  : company_query_set.company_name,
-                        "main_image"    : company_query_set.main_image,
-                        "city"          : company_query_set.city,
-                        "country"       : company_query_set.country,
-                        "company_id"    : company_query_set.id
-                      }
+            main_data=[]
+            for job in job_list_query_set :
+                company_query_set = Companies.objects.get(pk=job.companies_id)
+                tags_query_set = JobsToTags.objects.filter(jobs_id=job.id)
+              
+                job_info = {
+                            "position"      : job.position,
+                            "job_id"        : job.id
+                           }
+                
+                company = {
+                            "company_name"  : company_query_set.company_name,
+                            "main_image"    : company_query_set.main_image,
+                            "city"          : company_query_set.city,
+                            "country"       : company_query_set.country,
+                            "company_id"    : company_query_set.id
+                          }
 
-            tags =[{"skill" : Tags.objects.get(id = tag.tags_id).skill, "tag_id" : tag.tags_id} for tag in tags_query_set]
-            job_data ={"job" : job_info, "company" : company, "tags" : tags}
-            main_data.append(job_data)
+                tags =[{"skill" : Tags.objects.get(id = tag.tags_id).skill, "tag_id" : tag.tags_id} for tag in tags_query_set]
+                job_data ={"job" : job_info, "company" : company, "tags" : tags}
+                main_data.append(job_data)
 
-        return JsonResponse({"data" : main_data}, status=200)
+            return JsonResponse({"data" : main_data}, status=200)
+        elif(categories_id == 3) :
+            category_query_set = Categories.objects.all()
+            main_data=[]
+            for category in category_query_set :
+                job_list_query_set = category.jobs_set.all()
+                for job in job_list_query_set :
+                    company_query_set = Companies.objects.get(pk=job.companies_id)
+                    tags_query_set = JobsToTags.objects.filter(jobs_id=job.id)
+
+                    job_info = {
+                                "position"      : job.position,
+                                "job_id"        : job.id
+                               }
+                    company = {
+                                "company_name"  : company_query_set.company_name,
+                                "main_image"    : company_query_set.main_image,
+                                "city"          : company_query_set.city,
+                                "country"       : company_query_set.country,
+                                "company_id"    : company_query_set.id
+                              }
+                    tags     = [{"skill" : Tags.objects.get(id= tag.tags_id).skill, "tag_id" : tag.tags_id} for tag in tags_query_set]
+                    job_data = {"job" : job_info, "company" : company, "tags" : tags}
+                    main_data.append(job_data)
+
+            return JsonResponse({"data" : main_data}, status=200)
+
