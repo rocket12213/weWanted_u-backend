@@ -15,8 +15,8 @@ class Companies(models.Model) :
     class Meta :
         db_table = "companies"
 
-class CompaniesImages(models.Model) :
-    companies       = models.ForeignKey(Companies, on_delete=models.CASCADE)
+class CompaniseImages(models.Model) :
+    company         = models.ForeignKey(Companise, on_delete=models.CASCADE)
     company_image   = models.URLField(max_length = 3000)
     created_at      = models.DateTimeField(auto_now_add = True)
     updated_at      = models.DateTimeField(auto_now =True)
