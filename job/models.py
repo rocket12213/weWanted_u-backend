@@ -18,24 +18,25 @@ class Tags(models.Model) :
         db_table = 'tags'
 
 class Jobs(models.Model) :
-    companies           = models.ForeignKey(Companies, on_delete=models.CASCADE)
-    categories          = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    company             = models.ForeignKey(Companies, on_delete=models.CASCADE)
+    category            = models.ForeignKey(Categories, on_delete=models.CASCADE)
     position            = models.CharField(max_length=1000, null=True)
     intro               = models.TextField(null=True)
     main_tasks          = models.TextField(null=True)
     requirements        = models.TextField(null=True)
     preferred_points    = models.TextField(null=True)
     benefits            = models.TextField(null=True)
+    dead_line           = models.CharField(max_length=1000, null=True)
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
-    jobs_join_tags      = models.ManyToManyField(Tags, through='JobsToTags')
+    tags                = models.ManyToManyField(Tags, through='JobsToTags')
 
     class Meta :
         db_table = 'jobs'
 
 class JobsToTags(models.Model) :
-    jobs                = models.ForeignKey(Jobs, on_delete=models.CASCADE)
-    tags                = models.ForeignKey(Tags, on_delete=models.CASCADE)
+    job                 = models.ForeignKey(Jobs, on_delete=models.CASCADE)
+    tag                 = models.ForeignKey(Tags, on_delete=models.CASCADE)
     created_at          = models.DateTimeField(auto_now_add=True)
 
     class Meta :
