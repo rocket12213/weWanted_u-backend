@@ -2,7 +2,7 @@ from django.db        import models
 from users.models     import Users
 
 
-class Saving_Types(models.Model) :
+class SavingTypes(models.Model) :
     saving_type = models.CharField(max_length=15)
 
 class Resume(models.Model) :
@@ -15,7 +15,7 @@ class Resume(models.Model) :
     created_at   = models.DateTimeField(auto_now_add=True)
     updated_at   = models.DateTimeField(auto_now=True) 
 
-class My_Portfolio(models.Model) :
+class Portfolio(models.Model) :
     user	= models.ForeignKey(Users, on_delete=models.CASCADE)
     resume	= models.ForeignKey(Resume, on_delete=models.CASCADE, null=True)
     created_at  = models.DateTimeField(auto_now_add=True)
