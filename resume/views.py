@@ -5,7 +5,7 @@ import jwt
 from django.http  import JsonResponse
 from django.views import View
 from users.utils  import auth_required_decorator
-from .models      import My_Portfolio, Resume  
+from .models      import Portfolio, Resume  
 
 class PortfolioView(View):
     @auth_required_decorator

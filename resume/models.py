@@ -6,7 +6,7 @@ class SavingTypes(models.Model) :
     saving_type = models.CharField(max_length=15)
 
 class Resume(models.Model) :
-    saving_type  = models.ForeignKey(Saving_Types, on_delete=models.CASCADE)
+    saving_type  = models.ForeignKey(SavingTypes, on_delete=models.CASCADE)
     title        = models.CharField(max_length=30) 
     phone        = models.CharField(max_length=10)
     email        = models.CharField(max_length=20)

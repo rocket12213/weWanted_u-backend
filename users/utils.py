@@ -16,7 +16,7 @@ def auth_required_decorator(func) :
         try :
              decoded_access_token = jwt.decode(encoded_access_token, "secret",  algorithm="HS256")
             
-             exist_user = Users.objects.get(id=decoded_access_token["email"])
+             exist_user = Users.objects.get(email=decoded_access_token["email"])
              request.exist_user = exist_user
              return func(self, request, *args, **kwargs)
         
