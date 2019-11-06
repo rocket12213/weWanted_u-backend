@@ -12,7 +12,7 @@ class SignupView(View) :
         login_data = json.loads(request.body)
         
         try :
-            if len(login_data["email"])>20 :
+            if len(login_data["email"])>40 :
                 return JsonResponse({"message":"Too_Long_Email"}, status=400)
             
             if len(login_data["password"])<12 :
@@ -44,6 +44,9 @@ class AuthView(View) :
                 algorithm	  = "HS256"
                 encoded		  = jwt.encode(payload, encryption_secret, algorithm=algorithm)
                 return JsonResponse({"JsonWebToken":encoded.decode("UTF-8")}, status=200)
+
+            else : 
+                return JsonResponse({"message" : "Wrong_Password"}, status=400)
  
         except Users.DoesNotExist :
             return JsonResponse({"message":"INVALID_EMAIL"}, status=400)
