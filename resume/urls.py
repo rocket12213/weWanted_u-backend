@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import PortfolioView, SavedResumeView, NewResumeView, SavingTypesView
+from .views import ResumeView, ResumeUpdateView, SavingTypesView
 
 urlpatterns = [
-    path('', PortfolioView.as_view()),
-    path('/edit/<int:resume_id>', SavedResumeView.as_view()),
-    path('/new',NewResumeView.as_view()),
-    path('/savingtype', SavingTypesView.as_view()),
+    path('', ResumeView.as_view()),
+    path('/<int:resume_id>', ResumeUpdateView.as_view()),
+    path('/savingtype', SavingTypesView.as_view())
 ]
 
