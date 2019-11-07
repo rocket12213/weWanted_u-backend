@@ -11,11 +11,9 @@ from .models      import Portfolio, Resume, SavingTypes, Projects
 class SavingTypesView(View) :
     @auth_required_decorator
     def get(self, request) :
-        resume_data = json.loads(request.body)
-        res = list(SavingTypes.objects.filter(saving_type=resume_data["completed"]).values())
-        saving_type = json.dumps(res)
+       res = list(SavingTypes.objects.values())
 
-        return JsonResponse({"completed":saving_type}, status=200)
+       return JsonResponse({"saving_type":res}, status=200)
 
 class PortfolioView(View):
     @auth_required_decorator
@@ -29,15 +27,36 @@ class PortfolioView(View):
 class SavedResumeView(View): 
     @auth_required_decorator
     def get(self, request, resume_id):
-        res = list(Resume.objects.get(pk=["resume_id"]).values())
-        written_resume = jason.dumps(res)
-        return JsonResponse(written_resume, status=200)	 
+       
+        res = [{
+                 'id'          : props['id'],
+                 'title'       : props['title'],
+                 'about_me'    : props['about_me'],
+                 'blog'        : props['blog'],
+                 'email'       : props['email'],
+                 'phone'       : props['phone'],
+                #'saving_type' : SavingTypes.objects.get(id=props['saving_type_id']).saving_type,
+                 'saving_type' : props['saving_type_id'],
+                 'projects'    : [{
+                                   'resume_id'     : project['resume_id'],
+                                   'project_title' : project['project_title'],
+                                   'github'        : project['github'],
+                                   'description'   : project['description'],
+                                   'what_did_i_do' : project['what_did_i_do'],
+                                   'tech_stack'    : project['tech_stack']
+                                  } for project in Projects.objects.filter(resume_id=props['id']).values()],
+                 'created_at'  : props['created_at'],
+                 'updated_at'  : props['updated_at']  
+} for props in Resume.objects.filter(pk=resume_id).values()]
+           
+        return JsonResponse({"resume":res}, status=200)	 
 
     @auth_required_decorator
     @transaction.atomic()
     def post(self, request, resume_id):
         resume_data = json.loads(request.body)
-        saving_type = SavingTypes.objects.get(saving_type=resume_data["completed"]) 
+        saving_type = SavingTypes.objects.get(id=resume_data["saving_type"])
+        print(saving_type.id)
         resume = Resume (
             saving_type = saving_type,
             title       = resume_data["title"], 
@@ -47,7 +66,9 @@ class SavedResumeView(View):
 	    about_me    = resume_data["about_me"]
             )
         resume.save()
-        
+
+        Projects.objects.filter(resume_id=resume_id).delete()
+
         for single_project in resume_data["projects"] :
             Projects(
                 resume        = resume,
@@ -65,7 +86,7 @@ class NewResumeView(View):
     @transaction.atomic()
     def post(self, request) :
         resume_data = json.loads(request.body)
-        saving_type = SavingTypes.objects.get(saving_type=resume_data["completed"]) 
+        saving_type = SavingTypes.objects.get(id=resume_data["saving_type"]) 
         resume =  Resume (
             saving_type = saving_type,
             title       = resume_data["title"], 
