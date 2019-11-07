@@ -9,17 +9,13 @@ from job.models     import Jobs
 class FollowingView(View) :
     @auth_required_decorator
     def post(self, request) :
-        access_token = request.headers.get('Authorization')
-        follow_data = json.loads(request.body)
-
-        payload = jwt.decode(access_token, "secret", algorithm="HS256")
-        user=Users.objects.get(email=payload["email"])
-        job_id = follow_data["job_id"]
-        follow = follow_data["follow"]
+        user_id     = request.exist_user.id
+        job_id      = json.loads(request.body)["job_id"]
+        follow      = json.loads(request.body)["follow"]
 
         if follow :
-            Follows.objects.create(user_id=user.id, job_id=job_id)
+            Follows.objects.create(user_id=user_id, job_id=job_id)
         elif follow == False :
-            Follows.objects.filter(user_id=user.id, job_id=job_id).delete()
+            Follows.objects.filter(user_id=user_id, job_id=job_id).delete()
 
         return JsonResponse({"message":follow}, status=200)
