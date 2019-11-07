@@ -102,7 +102,7 @@ class ResumeUpdateView(View):
         if Resume.objects.get(pk=resume_id).user == request.exist_user :
             saving_type = SavingTypes.objects.get(id=resume_data["saving_type"])
 
-            resume = Resume (
+            resume = Resume.objects.filter(pk=resume_id).update(
                 saving_type = saving_type,
 		title       = resume_data["title"], 
 		phone       = resume_data["phone"],
@@ -110,15 +110,13 @@ class ResumeUpdateView(View):
 		blog        = resume_data["blog"],
 		about_me    = resume_data["about_me"],
 		user        = request.exist_user,
-	    )
-            resume.save()
+	    ) 
 
             Projects.objects.filter(resume_id=resume_id).delete()
 
             for single_project in resume_data["projects"] :
-
                 Projects(
-                    resume        = resume,
+                    resume        = Resume.objects.get(pk=resume_id),
                     project_title = single_project["project_title"],
                     github        = single_project["github"],
                     description   = single_project["description"],
