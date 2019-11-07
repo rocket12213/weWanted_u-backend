@@ -149,3 +149,31 @@ class JobListView(View) :
                     main_data.append(job_data)
             tag_list=list(all_tags)
             return JsonResponse({"data" : main_data,"tag_list":tag_list}, status=200)
+
+class FollowedJobView(View) :
+    @auth_required_decorator
+    def get(self, request) :
+        user_id = request.exist_user.id
+       
+        followed_job_data=[]
+        follow_list = Follows.objects.filter(user_id=user_id).select_related('job').select_related('job__company')
+        for el in follow_list :
+            job_info = {
+                        "position"      : el.job.position,
+                        "job_id"        : el.job.id,
+                        "dead_line"     : el.job.dead_line
+                       }
+            company = {
+                        "company_name"  : el.job.company.company_name,
+                        "main_image"    : el.job.company.main_image,
+                        "city"          : el.job.company.city,
+                        "country"       : el.job.company.country,
+                        "company_id"    : el.job.company.id
+                      }
+            job_data = {
+                        "job" : job_info,
+                        "company" : company,
+                        "follow" : True
+                       }
+            followed_job_data.append(job_data)
+        return JsonResponse({"data":followed_job_data}, status=200)
