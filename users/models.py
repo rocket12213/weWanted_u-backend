@@ -6,17 +6,16 @@ class Users(models.Model) :
     password    = models.CharField(max_length=400)
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
-    job         = models.ManyToManyField(Jobs, through='Follow')
+    job         = models.ManyToManyField(Jobs, through='Follows')
 
     class Meta :
         db_table = 'users'
 
-class Follow(models.Model) :
+class Follows(models.Model) :
     user        = models.ForeignKey(Users, on_delete=models.CASCADE)
     job         = models.ForeignKey(Jobs, on_delete=models.CASCADE)
-    follow      = models.BooleanField(default=False)
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
-        db_table ='follow'
+        db_table ='follows'
