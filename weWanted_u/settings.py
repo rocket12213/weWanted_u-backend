@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'job',
     'resume',
     'follow',
+    'repl',
 ]
 
 MIDDLEWARE = [

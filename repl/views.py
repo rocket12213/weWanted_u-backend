@@ -30,21 +30,49 @@ class DropDownView(View) :
 
 class ReplView(View) :
     @auth_required_decorator
-#    @transaction.atomic()
     def post(self, request) :
-        repl_data = json.loads(request.body)
+        repl_data       = json.loads(request.body)
+        category        = repl_data["category"]
+        career          = repl_data["career"]
+        mood            = repl_data["mood"]
+        route           = repl_data["route"]
+        test_level      = repl_data["test_level"]
+        result          = repl_data["result"]
+        company_name    = repl_data["company_name"]
+        user            = request.exist_user.id
+
+        category_id     = Categories.objects.get(category=category).id
+        career_id       = Careers.objects.get(career=career).id
+        mood_id         = Moods.objects.get(mood=mood).id
+        route_id        = Routes.objects.get(route=route).id
+        test_level_id   = TestLevels.objects.get(level=test_level).id
+        result_id       = Results.objects.get(result=result).id
+        company_id      = Companies.objects.get(company_name=company_name).id
+        
         repl = Reviews(
-                        question        = repl_data["question"],
-                        answer          = repl_data["answer"],
-                        review          = repl_data["review"],
-                        category_id     = repl_data["category_id"],
-                        career_id       = repl_data["career_id"],
-                        mood_id         = repl_data["mood_id"],
-                        route           = repl_data["route_id"],
-                        test_level      = repl_data["test_level_id"],
-                        result          = repl_data["result_id"],
-                        user_id         = request.exist_user.id
+                        question            = repl_data["question"],
+                        answer              = repl_data["answer"],
+                        review              = repl_data["review"],
+                        category_id         = category_id,
+                        career_id           = career_id,
+                        mood_id             = mood_id,
+                        route_id            = route_id,
+                        test_level_id       = test_level_id,
+                        result_id           = result_id,
+                        user_id             = request.exist_user.id,
+                        company_id          = company_id
         )
         repl.save()
+        data = {
+                "question" : repl_data["question"],
+                "answer"   : repl_data["answer"],
+                "review"    : repl_data["review"]
+                }
+        #re = Reviews.objects.select_related('company').select_related('category').select_related('career').select_related('mood').select_related('route').select_related('test_level').select_related('result').filter(user_id=
+#        result_data = {
+#                "question" : Reviews.objects.get(
+        
 
-        return JsonResponse({"repl":repl}, status=200)
+#        review = list(Reviews.objects.valuea()
+        
+        return JsonResponse({"data":data}, status=200)
