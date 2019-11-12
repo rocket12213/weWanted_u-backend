@@ -5,30 +5,40 @@ from company.models import Companies
 
 class Careers(models.Model) :
     career      = models.CharField(max_length=20)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
         db_table = 'careers'
 
 class Moods(models.Model) :
     mood        = models.CharField(max_length=20)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
         db_table = 'moods'
 
 class Routes(models.Model) :
     route       = models.CharField(max_length=20)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
         db_table = 'routes'
 
 class TestLevels(models.Model) :
     level       = models.IntegerField(blank=True, null=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
         db_table ='testlevels'
 
 class Results(models.Model) :
     result      = models.CharField(max_length=20)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    updated_at  = models.DateTimeField(auto_now=True)
 
     class Meta :
         db_table = 'results'

@@ -68,11 +68,5 @@ class ReplView(View) :
                 "answer"   : repl_data["answer"],
                 "review"    : repl_data["review"]
                 }
-        #re = Reviews.objects.select_related('company').select_related('category').select_related('career').select_related('mood').select_related('route').select_related('test_level').select_related('result').filter(user_id=
-#        result_data = {
-#                "question" : Reviews.objects.get(
-        
-
-#        review = list(Reviews.objects.valuea()
-        
         return JsonResponse({"data":data}, status=200)
+
