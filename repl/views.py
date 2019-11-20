@@ -1,4 +1,5 @@
 import json
+
 from users.utils    import auth_required_decorator
 from django.http    import JsonResponse
 from django.views   import View
@@ -6,6 +7,11 @@ from users.models   import Users
 from job.models     import Categories
 from company.models import Companies
 from repl.models    import Careers, Moods, Routes, TestLevels, Results, Reviews
+
+
+class ModdeView(View):
+    def get(self, request):
+        return JsonResponse({"mood": list(Moods.objects.values())},status=200)
 
 class DropDownView(View) :
     def get(self, request,sort_id) :
@@ -16,8 +22,6 @@ class DropDownView(View) :
             career = list(Careers.objects.values())
             return JsonResponse({"career":career},status=200)
         elif sort_id == 3 :
-            mood = list(Moods.objects.values())
-            return JsonResponse({"mood":mood},status=200)
         elif sort_id == 4 :
             route = list(Routes.objects.values())
             return JsonResponse({"route":route},status=200)
@@ -28,45 +32,28 @@ class DropDownView(View) :
             result = list(Results.objects.values())
             return JsonResponse({"result":result},status=200)
 
-class ReplView(View) :
-    @auth_required_decorator
+class ReplyView(View) :
+    @auth_required
     def post(self, request) :
-        repl_data       = json.loads(request.body)
-        category        = repl_data["category"]
-        career          = repl_data["career"]
-        mood            = repl_data["mood"]
-        route           = repl_data["route"]
-        test_level      = repl_data["test_level"]
-        result          = repl_data["result"]
-        company_name    = repl_data["company_name"]
-        user            = request.exist_user.id
+        reply_data = json.loads(request.body)
+      
+        Reviews(
+            question      = reply_data["question"],
+            answer        = reply_data["answer"],
+            review        = reply_data["review"],
+            category_id   = reply_data["category_id"],
+            career_id     = reply_data["career_id"],
+            mood_id       = reply_data["mood_id"],
+            route_id      = reply_data["route_id"],
+            test_level_id = reply_data["test_level_id"],
+            result_id     = reply_data["result_id"],
+            user_id       = request.user.id,
+            company_id    = reply_data["company_id"]
+        ).save()
 
-        category_id     = Categories.objects.get(category=category).id
-        career_id       = Careers.objects.get(career=career).id
-        mood_id         = Moods.objects.get(mood=mood).id
-        route_id        = Routes.objects.get(route=route).id
-        test_level_id   = TestLevels.objects.get(level=test_level).id
-        result_id       = Results.objects.get(result=result).id
-        company_id      = Companies.objects.get(company_name=company_name).id
-        
-        repl = Reviews(
-                        question            = repl_data["question"],
-                        answer              = repl_data["answer"],
-                        review              = repl_data["review"],
-                        category_id         = category_id,
-                        career_id           = career_id,
-                        mood_id             = mood_id,
-                        route_id            = route_id,
-                        test_level_id       = test_level_id,
-                        result_id           = result_id,
-                        user_id             = request.exist_user.id,
-                        company_id          = company_id
-        )
-        repl.save()
-        data = {
-                "question" : repl_data["question"],
-                "answer"   : repl_data["answer"],
-                "review"    : repl_data["review"]
-                }
-        return JsonResponse({"data":data}, status=200)
+        return JsonResponse({"data": {
+            "question" : reply_data["question"],
+            "answer"   : reply_data["answer"],
+            "review"   : reply_data["review"]
+        }}, status=200)
 

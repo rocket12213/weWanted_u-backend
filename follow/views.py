@@ -9,13 +9,19 @@ from job.models     import Jobs
 class FollowingView(View) :
     @auth_required_decorator
     def post(self, request) :
-        user_id     = request.exist_user.id
-        job_id      = json.loads(request.body)["job_id"]
-        follow      = json.loads(request.body)["follow"]
+        try:
+            user_id     = request.user.id
+            input_data  = json.loads(request.body)
+            job_id      = input_data["job_id"]
+            follow      = input_data["follow"]
 
-        if follow :
-            Follows.objects.create(user_id=user_id, job_id=job_id)
-        elif follow == False :
-            Follows.objects.filter(user_id=user_id, job_id=job_id).delete()
+            if follow:
+                Follows.objects.create(user_id=user_id, job_id=job_id)
+            else:
+                Follows.objects.filter(user_id=user_id, job_id=job_id).delete()
 
-        return JsonResponse({"message":follow}, status=200)
+            return JsonResponse({"Followed": follow }, status=200)
+        except KeyError:
+            ...
+        except ConstraintErorr: #정확한 에러 이름은 찾아보세요
+            ...

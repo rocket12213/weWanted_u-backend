@@ -4,9 +4,9 @@ from job.models     import Jobs
 class Users(models.Model) :
     email       = models.CharField(max_length=20)
     password    = models.CharField(max_length=400)
+    job         = models.ManyToManyField(Jobs, through='Follows')
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
-    job         = models.ManyToManyField(Jobs, through='Follows')
 
     class Meta :
         db_table = 'users'

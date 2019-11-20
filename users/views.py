@@ -12,10 +12,10 @@ class SignupView(View) :
         login_data = json.loads(request.body)
         
         try :
-            if len(login_data["email"])>40 :
-                return JsonResponse({"message":"Too_Long_Email"}, status=400)
+            if len(login_data["email"]) > 40 :
+                return JsonResponse({"message":"TOO_LONG_EMAIL"}, status=400)
             
-            if len(login_data["password"])<12 :
+            if len(login_data["password"]) < 12 :
                 return JsonResponse({"message":"Too_Short_Password"}, status=400)
 
             if Users.objects.filter(email=login_data["email"]).exists() :
@@ -27,9 +27,8 @@ class SignupView(View) :
                     password= hased_user_pw.decode("UTF-8")
                 ).save()
                 return JsonResponse({"message":"Success"}, status=200)
-
         except KeyError :
-            return JsonResponse({"message":"Wrong_Path"}, status=400)
+            return JsonResponse({"message":"INVALID_INPUT"}, status=400)
 
 class AuthView(View) : 
     def post(self, request) :
@@ -38,21 +37,19 @@ class AuthView(View) :
 
         try :
             exist_user = Users.objects.get(email=login_data["email"])
-            if bcrypt.checkpw(password.encode("utf-8"), exist_user.password.encode("utf-8")) :
-                payload 	  = {"email" : exist_user.email}
-                encryption_secret = "secret"
-                algorithm	  = "HS256"
-                encoded		  = jwt.encode(payload, encryption_secret, algorithm=algorithm)
-                return JsonResponse({"JsonWebToken":encoded.decode("UTF-8")}, status=200)
 
+            if bcrypt.checkpw(password.encode("utf-8"), exist_user.password.encode("utf-8")) :
+                payload           = {"id" : exist_user.id}
+                encryption_secret = "secret"
+                algorithm         = "HS256"
+                encoded           = jwt.encode(payload, encryption_secret, algorithm = algorithm)
+                return JsonResponse({"acces_token":encoded.decode("UTF-8")}, status=200)
             else : 
-                return JsonResponse({"message" : "Wrong_Password"}, status=400)
- 
+                return JsonResponse({"message" : "INVALID_PASSWORD"}, status=400)
         except Users.DoesNotExist :
             return JsonResponse({"message":"INVALID_EMAIL"}, status=400)
-
         except KeyError :
-            return JsonResponse({"message":"Wrong_Path"}, status=400)
+            return JsonResponse({"message":"INVALID_INPUT"}, status=400)
 
 
 
