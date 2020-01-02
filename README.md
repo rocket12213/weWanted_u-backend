@@ -17,40 +17,40 @@ Requirements
 bcrypt==3.1.7   
 beautifulsoup4==4.8.1   
 bs4==0.0.1   
-certifi==2019.9.11
-cffi==1.13.1
-chardet==3.0.4
-Django==2.2.6
-django-cors-headers==3.1.1
-idna==2.8
-mysql-connector-python==8.0.18
-protobuf==3.10.0
-pycparser==2.19
-PyJWT==1.7.1
-pytz==2019.3
-requests==2.22.0
-selenium==3.141.0
-six==1.12.0
-soupsieve==1.9.4
-sqlparse==0.3.0
-urllib3==1.25.6
+certifi==2019.9.11   
+cffi==1.13.1   
+chardet==3.0.4   
+Django==2.2.6   
+django-cors-headers==3.1.1   
+idna==2.8   
+mysql-connector-python==8.0.18   
+protobuf==3.10.0  
+pycparser==2.19  
+PyJWT==1.7.1  
+pytz==2019.3  
+requests==2.22.0  
+selenium==3.141.0  
+six==1.12.0  
+soupsieve==1.9.4  
+sqlparse==0.3.0  
+urllib3==1.25.6  
 
 Endpoint
 
-회원가입 & 로그인 (user app)
-[POST] 회원가입
-[POST] 로그인
+회원가입 & 로그인 (user app)  
+[POST] 회원가입  
+[POST] 로그인  
 
-채용공고(job app)
-[GET] 상세 채용 정보 
-[GET] 채용 공고 리스트 
-[GET] 팔로우한 채용 공고 리스트 
+채용공고(job app)  
+[GET] 상세 채용 정보   
+[GET] 채용 공고 리스트   
+[GET] 팔로우한 채용 공고 리스트   
 
-팔로우(follow app)
-[POST] 채용 공고 팔로우
+팔로우(follow app)  
+[POST] 채용 공고 팔로우  
 
-이력서(resume app)
-[GET] 이력서 저장 타입
-[POST] 이력서
-[GET] 이력서
+이력서(resume app)  
+[GET] 이력서 저장 타입  
+[POST] 이력서  
+[GET] 이력서  
 
