@@ -1,7 +1,7 @@
-Ovierview
+**Ovierview**
 웹 개발자 채용 관리 플랫폼 (wanted clone)
 
-Features
+**Features**
 + Scrum 개발 방식을 적용하여 Sprint로 개발 및 검토를 하며 효율적으로 협업  
 + Python requests module을 활용한 web data scraping  
 + Django 웹 프레임워크를 활용한 다양한 backend API 구현  
@@ -12,8 +12,7 @@ Features
 + git과 github를 사용하여 코드의 버전 관리 및 협업
 + AWS RDS 서비스의 MySQL을 데이터베이스로 사용하여 EC2 서버에 API 배포
 
-Requirements
-
+**Requirements**
 bcrypt==3.1.7   
 beautifulsoup4==4.8.1   
 bs4==0.0.1   
@@ -35,8 +34,7 @@ soupsieve==1.9.4
 sqlparse==0.3.0  
 urllib3==1.25.6  
 
-Endpoint
-
+**Endpoint**
 회원가입 & 로그인 (user app)  
 [POST] 회원가입  
 [POST] 로그인  
