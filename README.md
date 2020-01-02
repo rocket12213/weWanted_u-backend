@@ -2,9 +2,9 @@ Ovierview
 웹 개발자 채용 관리 플랫폼 (wanted clone)
 
 Features
-+ Scrum 개발 방식을 적용하여 Sprint로 개발 및 검토를 하며 효율적으로 협업
-+ Python requests module을 활용한 web data scraping
-+ Django 웹 프레임워크를 활용한 다양한 backend API 구현
++ Scrum 개발 방식을 적용하여 Sprint로 개발 및 검토를 하며 효율적으로 협업  
++ Python requests module을 활용한 web data scraping  
++ Django 웹 프레임워크를 활용한 다양한 backend API 구현  
   - 인증: bcrypt, PyJWT module을 활용한 회원가입, 로그인 기능 구현
   - 인가: decorator를 이용하여 인증 절차를 다른 엔드포인트에 적용
   - 채용 공고 data 전송, review 작성, 이력서 등록, 팔로우 기능 구현
