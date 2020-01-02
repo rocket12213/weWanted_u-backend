@@ -15,8 +15,11 @@ Features
 Requirements
 
 bcrypt==3.1.7
+
 beautifulsoup4==4.8.1
+
 bs4==0.0.1
+
 certifi==2019.9.11
 cffi==1.13.1
 chardet==3.0.4
